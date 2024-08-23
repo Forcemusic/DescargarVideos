@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descargar Video</title>
+    <script src="https://cdn.tailwindcss.com"></script> <!-- CDN de Tailwind CSS -->
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    </style>
+    <script>
+        function sender_data() {
+            document.getElementById("response").innerText = "Descargando Video, espere...";
+            const data = { name: document.getElementById('name').value };
+            fetch('http://127.0.0.1:5000/api/data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(data => document.getElementById('response').innerText = data.received_data);
+        }
+    </script>
+</head>
+<body class="flex items-center justify-center min-h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+    <div class="bg-white shadow-2xl rounded-xl p-10 max-w-lg w-full transform transition-all duration-500 hover:scale-105">
+        <h2 class="text-3xl font-extrabold text-gray-900 mb-6 text-center">Descargar Video</h2>
+        <p class="text-gray-600 mb-4 text-center">Ingrese la URL del video de YouTube que desea descargar.</p>
+        <input type="text" id="name" placeholder="Coloque la URL de Youtube" class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 mb-6">
+        <button onclick="sender_data()" class="w-full bg-purple-600 text-white font-semibold p-4 rounded-lg shadow-lg hover:bg-purple-700 hover:shadow-xl transition-all duration-300">Descargar Video</button>
+        <p id="response" class="mt-6 text-center text-purple-700 font-medium"></p>
+    </div>
+</body>
+</html>
